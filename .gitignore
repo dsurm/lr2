@@ -1,0 +1,10 @@
+#config/pg_arbitrator/.env
+#config/pg_master/.env
+#config/pg_slave/.env
+install/pg_arbitrator/agent/node_modules/
+install/pg_master/agent/node_modules/
+install/pg_slave/agent/node_modules/
+install/pg_arbitrator/agent/.env
+install/pg_master/agent/.env
+install/pg_slave/agent/.env/
+tester/node_modules/

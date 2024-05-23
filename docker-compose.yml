@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  pg_arbitrator:
+    build:
+      context: ./install/pg_arbitrator/
+    container_name: pg_arbitrator
+    volumes:
+      - ./config/pg_arbitrator/.env:/.env:ro
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      - pg_master
+      - pg_slave
+
+  pg_master:
+    build:
+      context: ./install/pg_master/
+    container_name: pg_master
+    env_file:
+      - ./config/pg_master/.env
+    ports:
+      - "127.0.0.1:5432:5432"
+    healthcheck:
+      test: node /agent/index.js || kill 1
+      interval: 100ms
+      retries: 1
+      start_period: 10s
+      timeout: 60s
+  
+  pg_slave:
+    build:
+      context: ./install/pg_slave/
+    container_name: pg_slave
+    env_file:
+      - ./config/pg_slave/.env
+    ports:
+      - "127.0.0.1:5433:5432"
+    depends_on:
+      - pg_master
+    healthcheck:
+      test: node /agent/index.js || exit 1
+      interval: 100ms
+      retries: 1
+      start_period: 10s
+      timeout: 60s
