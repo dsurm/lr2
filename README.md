@@ -62,7 +62,6 @@ docker inspect --format "{{json .State.Health }}" <container_name>
 ```
 
 # Результаты
-При выполнении сценариев получился следующий результат:
 ```
 Statistics for scenario number 1
 Scenario params: {"envKey":"POSTGRESQL_SYNCHRONOUS_COMMIT_MODE","envValue":"on","stopContainer":"pg_master"}
